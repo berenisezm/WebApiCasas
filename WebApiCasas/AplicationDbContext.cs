@@ -11,5 +11,7 @@ namespace WebApiCasas
         }
 
         public DbSet<Casa> Casas {get; set;}
+        public DbSet<Familia> Familias { get; set;}
+       
     }
 }

@@ -14,7 +14,6 @@
 
         public float Precio {get;set;}
 
-
-
+        public List<Familia> familias { get;set;}
     }
 }

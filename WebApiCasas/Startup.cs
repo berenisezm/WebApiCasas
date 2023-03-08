@@ -1,4 +1,7 @@
-﻿namespace WebApiCasas
+﻿using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+
+namespace WebApiCasas
 {
     public class Startup
     {
@@ -11,10 +14,24 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(x =>
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            services.AddDbContext<AplicationDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("defaulConnection")));
+
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "ApiCasas", Version = "v1" });
+            }
+
+
+            );
+
+
+
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,4 +55,5 @@
             });
         }
     }
+
 }
